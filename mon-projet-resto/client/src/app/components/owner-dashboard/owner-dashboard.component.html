@@ -1,0 +1,60 @@
+<div class="dash">
+  <header class="dash__header">
+    <div>
+      <h1>{{ 'owner.title' | translate }}</h1>
+      <p>{{ 'owner.subtitle' | translate }}</p>
+    </div>
+    <div class="dash__user">
+      {{ 'admin.signedInAs' | translate }} <strong>{{ auth.user()?.email }}</strong>
+    </div>
+  </header>
+
+  @if (draft(); as d) {
+    <section class="panel">
+      <h2>{{ 'owner.basicInfo' | translate }}</h2>
+      <label>{{ 'owner.name' | translate }}<input class="text" [value]="d.name" (input)="patchField('name', $any($event.target).value)" /></label>
+      <label>{{ 'owner.tagline' | translate }}<input class="text" [value]="d.tagline" (input)="patchField('tagline', $any($event.target).value)" /></label>
+      <label>{{ 'owner.description' | translate }}<textarea class="text" rows="3" (input)="patchField('description', $any($event.target).value)">{{ d.description }}</textarea></label>
+      <label>{{ 'owner.phone' | translate }}<input class="text" [value]="d.phone" (input)="patchField('phone', $any($event.target).value)" /></label>
+      <label>{{ 'owner.email' | translate }}<input class="text" type="email" [value]="d.email" (input)="patchField('email', $any($event.target).value)" /></label>
+    </section>
+
+    <section class="panel">
+      <h2>{{ 'owner.visualIdentity' | translate }}</h2>
+      <label>{{ 'owner.heroImage' | translate }}<input class="text" [value]="d.uiConfig.heroImageUrl" (input)="patchUi('heroImageUrl', $any($event.target).value)" /></label>
+      <label>{{ 'owner.logo' | translate }}<input class="text" [value]="d.uiConfig.logoUrl" (input)="patchUi('logoUrl', $any($event.target).value)" /></label>
+      <div class="row">
+        <label>{{ 'owner.primary' | translate }}<input class="text" type="color" [value]="d.uiConfig.primaryColor" (input)="patchUi('primaryColor', $any($event.target).value)" /></label>
+        <label>{{ 'owner.secondary' | translate }}<input class="text" type="color" [value]="d.uiConfig.secondaryColor" (input)="patchUi('secondaryColor', $any($event.target).value)" /></label>
+        <label>{{ 'owner.accent' | translate }}<input class="text" type="color" [value]="d.uiConfig.accentColor" (input)="patchUi('accentColor', $any($event.target).value)" /></label>
+      </div>
+      <label>{{ 'owner.headingFont' | translate }}<input class="text" [value]="d.uiConfig.headingFont" (input)="patchUi('headingFont', $any($event.target).value)" /></label>
+      <label>{{ 'owner.bodyFont' | translate }}<input class="text" [value]="d.uiConfig.bodyFont" (input)="patchUi('bodyFont', $any($event.target).value)" /></label>
+      <label>{{ 'owner.menuLayout' | translate }}
+        <select [value]="d.uiConfig.menuLayout" (change)="patchUi('menuLayout', $any($event.target).value)">
+          <option value="GRID">{{ 'owner.layoutGrid' | translate }}</option>
+          <option value="LIST">{{ 'owner.layoutList' | translate }}</option>
+          <option value="MAGAZINE">{{ 'owner.layoutMagazine' | translate }}</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="panel">
+      <h2>{{ 'owner.shopify' | translate }}</h2>
+      <p class="hint">{{ 'owner.shopifyHint' | translate }}</p>
+      <label>{{ 'owner.shopUrl' | translate }}<input class="text" [value]="d.shopifyShopUrl" (input)="patchField('shopifyShopUrl', $any($event.target).value)" placeholder="my-shop.myshopify.com" /></label>
+    </section>
+
+    <footer class="dash__footer">
+      @if (error(); as e) { <span class="error">{{ e }}</span> }
+      @if (savedAt(); as t) { <span class="saved">{{ 'admin.savedAt' | translate }} {{ t | date:'mediumTime' }}</span> }
+      <button (click)="save()" [disabled]="saving()">
+        {{ (saving() ? 'admin.saving' : 'admin.save') | translate }}
+      </button>
+    </footer>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else {
+    <p>{{ 'owner.loading' | translate }}</p>
+  }
+</div>

@@ -1,0 +1,37 @@
+@if (banner(); as b) {
+  <aside class="global-banner">{{ b }}</aside>
+}
+
+<header class="hero">
+  <div class="hero__inner">
+    <h1>{{ 'home.heroTitle' | translate }}</h1>
+    <p>{{ 'home.heroSubtitle' | translate }}</p>
+  </div>
+</header>
+
+<section class="grid">
+  @for (r of restaurants(); track r._id) {
+    <a class="card" [routerLink]="['/restaurants', r.slug]">
+      <div
+        class="card__image"
+        [style.backgroundImage]="
+          r.uiConfig.heroImageUrl
+            ? 'url(' + r.uiConfig.heroImageUrl + ')'
+            : 'linear-gradient(135deg,' + r.uiConfig.primaryColor + ',' + r.uiConfig.accentColor + ')'
+        "
+      ></div>
+      <div class="card__body">
+        <h3>{{ r.name }}</h3>
+        <p>{{ r.tagline }}</p>
+        <ul class="card__cuisines">
+          @for (c of r.cuisineTypes; track c) {
+            <li>{{ c }}</li>
+          }
+        </ul>
+        <span class="card__cta">{{ 'home.viewMenu' | translate }}</span>
+      </div>
+    </a>
+  } @empty {
+    <p class="empty">{{ 'home.empty' | translate }}</p>
+  }
+</section>

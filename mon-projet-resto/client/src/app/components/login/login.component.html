@@ -1,0 +1,49 @@
+<section class="login">
+  <form class="card" (ngSubmit)="submit()">
+    <h1 class="title">{{ 'login.title' | translate }}</h1>
+    <p class="subtitle">{{ 'login.subtitle' | translate }}</p>
+
+    <label class="field">
+      <span>{{ 'login.email' | translate }}</span>
+      <input
+        type="email"
+        autocomplete="email"
+        required
+        [ngModel]="email()"
+        (ngModelChange)="email.set($event)"
+        name="email"
+      />
+    </label>
+
+    <label class="field">
+      <span>{{ 'login.password' | translate }}</span>
+      <input
+        type="password"
+        autocomplete="current-password"
+        required
+        [ngModel]="password()"
+        (ngModelChange)="password.set($event)"
+        name="password"
+      />
+    </label>
+
+    @if (error(); as e) {
+      <p class="error">{{ e }}</p>
+    }
+
+    <button type="submit" [disabled]="loading()">
+      {{ (loading() ? 'login.submitLoading' : 'login.submit') | translate }}
+    </button>
+
+    <details class="hint">
+      <summary>{{ 'login.seededCreds' | translate }}</summary>
+      <ul>
+        <li><code>admin&#64;yva.local</code> / <code>admin1234</code></li>
+        <li><code>owner&#64;talkintacos.local</code> / <code>owner1234</code></li>
+        <li><code>customer&#64;yva.local</code> / <code>customer1234</code></li>
+      </ul>
+    </details>
+
+    <a routerLink="/" class="back">{{ 'login.back' | translate }}</a>
+  </form>
+</section>

@@ -1,0 +1,223 @@
+# =============================================================================
+# OpenRate — root .gitignore
+# Couvre l'ensemble du monorepo (client/ + server/).
+# Les .gitignore par sous-projet (client/.gitignore, server/.gitignore)
+# restent en place pour les besoins spécifiques à chaque techno.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 🔐 Secrets et variables d'environnement — NE JAMAIS COMMITER
+# -----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# Mots de passe, clés API, tokens
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
+*.secret
+*.secrets
+
+# Clés Shopify, JWT secrets, mots de passe DB
+shopify-*.json
+firebase-adminsdk*.json
+service-account*.json
+google-credentials*.json
+aws-credentials
+.aws/
+.azure/
+
+# -----------------------------------------------------------------------------
+# 📦 Dépendances
+# -----------------------------------------------------------------------------
+node_modules/
+**/node_modules/
+.pnp
+.pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# -----------------------------------------------------------------------------
+# 🏗️  Builds et output compilé
+# -----------------------------------------------------------------------------
+dist/
+**/dist/
+build/
+**/build/
+out/
+out-tsc/
+tmp/
+*.tsbuildinfo
+.tscache/
+
+# Angular spécifique
+/.angular/
+**/.angular/cache/
+.sass-cache/
+
+# Coverage et tests
+coverage/
+**/coverage/
+*.lcov
+.nyc_output/
+junit.xml
+test-results/
+
+# -----------------------------------------------------------------------------
+# 📝 Logs
+# -----------------------------------------------------------------------------
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+testem.log
+debug.log
+
+# -----------------------------------------------------------------------------
+# 🛠️  IDE et éditeurs
+# -----------------------------------------------------------------------------
+# VS Code (on garde les snippets partagés de l'équipe)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+
+# JetBrains (WebStorm, IntelliJ)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Sublime / Atom / Vim / Emacs
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.sublime-project
+.atom/
+*.swp
+*.swo
+*~
+.netrwhist
+\#*\#
+.\#*
+.emacs.desktop
+.emacs.desktop.lock
+
+# -----------------------------------------------------------------------------
+# 💻 Système d'exploitation
+# -----------------------------------------------------------------------------
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+Icon
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+.directory
+.Trash-*
+.nfs*
+
+# -----------------------------------------------------------------------------
+# 🗄️  Bases de données locales et dumps
+# -----------------------------------------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+*.mdb
+data/
+mongo-data/
+*.bson
+dump/
+*.dump
+
+# -----------------------------------------------------------------------------
+# 📤 Uploads et fichiers utilisateur (si on en ajoute plus tard)
+# -----------------------------------------------------------------------------
+uploads/
+public/uploads/
+storage/
+
+# -----------------------------------------------------------------------------
+# 🐳 Docker et conteneurs (overrides locaux)
+# -----------------------------------------------------------------------------
+docker-compose.override.yml
+docker-compose.local.yml
+.docker/
+
+# -----------------------------------------------------------------------------
+# 🔁 Caches divers
+# -----------------------------------------------------------------------------
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+.prettiercache
+.npm/
+.tsbuildinfo
+*.tgz
+
+# -----------------------------------------------------------------------------
+# 🌐 Outils tiers
+# -----------------------------------------------------------------------------
+# Vercel
+.vercel/
+# Netlify
+.netlify/
+# Serverless
+.serverless/
+# Turborepo
+.turbo/
+
+# -----------------------------------------------------------------------------
+# 📊 Fichiers temporaires et de travail
+# -----------------------------------------------------------------------------
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+.tmp/
+scratch/
+TODO.local.md
+NOTES.local.md
+
+# -----------------------------------------------------------------------------
+# 🤖 Outils IA / agents
+# -----------------------------------------------------------------------------
+.claude/
+.cursor/
+.aider*

@@ -1,0 +1,285 @@
+// ----- Per-tenant CSS variables (set inline by the component) -----
+:host {
+  --brand-primary: #111;
+  --brand-secondary: #fff;
+  --brand-accent: #1E88E5;
+  --font-heading: 'Anton', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  display: block;
+  font-family: var(--font-body);
+  color: #1a1a1a;
+  background: #faf7f2;
+}
+
+.loading {
+  text-align: center;
+  padding: 4rem 1rem;
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+// Global, cross-tenant banner driven by GlobalConfig.
+.global-banner {
+  background: var(--brand-accent);
+  color: var(--brand-secondary);
+  text-align: center;
+  padding: 0.6rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+// ----- HERO -----
+.hero {
+  position: relative;
+  min-height: 70vh;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--brand-primary);
+  display: flex;
+  align-items: flex-end;
+
+  &__overlay {
+    width: 100%;
+    padding: 4rem 2rem 3rem;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.35) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    color: var(--brand-secondary);
+  }
+
+  &__logo {
+    height: 72px;
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.5rem;
+  }
+
+  &__tagline {
+    font-size: clamp(1rem, 1.6vw, 1.35rem);
+    max-width: 50ch;
+    margin: 0 0 1rem;
+    opacity: 0.92;
+  }
+
+  &__cuisine {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  &__chip {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
+// ----- STICKY CATEGORY NAV -----
+.category-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 1rem 1.5rem;
+  background: var(--brand-secondary);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar { display: none; }
+
+  &__pill {
+    flex: 0 0 auto;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    border: 1.5px solid rgba(0, 0, 0, 0.12);
+    background: transparent;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      border-color: var(--brand-accent);
+    }
+
+    &.is-active {
+      background: var(--brand-accent);
+      color: var(--brand-secondary);
+      border-color: var(--brand-accent);
+    }
+  }
+}
+
+// ----- MENU GRID -----
+.menu {
+  padding: 2.5rem 1.5rem 4rem;
+  display: grid;
+  gap: 1.5rem;
+
+  &--grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+
+  &--list {
+    grid-template-columns: 1fr;
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  &--magazine {
+    grid-template-columns: repeat(12, 1fr);
+    .card:nth-child(6n + 1) { grid-column: span 7; }
+    .card:nth-child(6n + 2) { grid-column: span 5; }
+    .card:nth-child(6n + 3) { grid-column: span 4; }
+    .card:nth-child(6n + 4) { grid-column: span 4; }
+    .card:nth-child(6n + 5) { grid-column: span 4; }
+    .card:nth-child(6n)     { grid-column: span 12; }
+  }
+
+  &__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 0;
+    opacity: 0.6;
+  }
+}
+
+// ----- CARD -----
+.card {
+  background: var(--brand-secondary);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.12);
+  }
+
+  &--unavailable {
+    opacity: 0.55;
+    filter: saturate(0.6);
+  }
+
+  &__image {
+    aspect-ratio: 4 / 3;
+    background-size: cover;
+    background-position: center;
+    background-color: #eee;
+  }
+
+  &__body {
+    padding: 1.25rem 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
+  &__price {
+    font-weight: 700;
+    color: var(--brand-accent);
+  }
+
+  &__desc {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    opacity: 0.78;
+  }
+
+  &__tags {
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  &__tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  &__cta {
+    margin-top: auto;
+    padding: 0.85rem 1rem;
+    border: none;
+    border-radius: 10px;
+    background: var(--brand-primary);
+    color: var(--brand-secondary);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: var(--brand-accent);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+  }
+}
+
+// ----- FOOTER -----
+.footer {
+  padding: 2rem 1.5rem 3rem;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.75;
+
+  a {
+    color: var(--brand-primary);
+    text-decoration: underline;
+  }
+}

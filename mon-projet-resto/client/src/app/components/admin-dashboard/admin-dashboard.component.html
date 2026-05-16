@@ -1,0 +1,87 @@
+<div class="dash">
+  <header class="dash__header">
+    <div>
+      <h1>{{ 'admin.title' | translate }}</h1>
+      <p>{{ 'admin.subtitle' | translate }}</p>
+    </div>
+    <div class="dash__user">
+      {{ 'admin.signedInAs' | translate }} <strong>{{ auth.user()?.email }}</strong>
+    </div>
+  </header>
+
+  @if (draft(); as d) {
+    <section class="panel">
+      <h2>{{ 'admin.bannerSection' | translate }}</h2>
+      <label class="toggle">
+        <input
+          type="checkbox"
+          [checked]="d.globalBannerEnabled"
+          (change)="setBannerEnabled($any($event.target).checked)"
+        />
+        <span>{{ 'admin.bannerEnabled' | translate }}</span>
+      </label>
+      <input
+        class="text"
+        type="text"
+        [placeholder]="'admin.bannerPlaceholder' | translate"
+        [value]="d.globalBannerText"
+        (input)="setBannerText($any($event.target).value)"
+      />
+    </section>
+
+    <section class="panel">
+      <h2>{{ 'admin.flagsSection' | translate }}</h2>
+      <p class="hint">{{ 'admin.flagsHint' | translate }}</p>
+
+      @for (flag of d.flags; track flag.key) {
+        <article class="flag">
+          <header>
+            <code>{{ flag.key }}</code>
+            <label class="toggle">
+              <input
+                type="checkbox"
+                [checked]="flag.enabled"
+                (change)="toggleFlagEnabled(flag.key)"
+              />
+              <span>{{ (flag.enabled ? 'admin.flagEnabled' : 'admin.flagDisabled') | translate }}</span>
+            </label>
+          </header>
+          <p class="flag__desc">{{ flag.description }}</p>
+
+          <div class="flag__row">
+            <label class="toggle">
+              <input
+                type="checkbox"
+                [checked]="flag.forceDefault"
+                (change)="toggleForceDefault(flag.key)"
+              />
+              <span>{{ 'admin.forceDefault' | translate }}</span>
+            </label>
+
+            <label>
+              {{ 'admin.defaultVariant' | translate }}
+              <select
+                [value]="flag.defaultVariant"
+                (change)="setDefaultVariant(flag.key, $any($event.target).value)"
+              >
+                @for (v of flag.variants; track v.name) {
+                  <option [value]="v.name">{{ v.name }} ({{ v.weight }}%)</option>
+                }
+              </select>
+            </label>
+          </div>
+        </article>
+      }
+    </section>
+
+    <footer class="dash__footer">
+      @if (error(); as e) { <span class="error">{{ e }}</span> }
+      @if (savedAt(); as t) { <span class="saved">{{ 'admin.savedAt' | translate }} {{ t | date:'mediumTime' }}</span> }
+      <button (click)="save()" [disabled]="saving()">
+        {{ (saving() ? 'admin.saving' : 'admin.save') | translate }}
+      </button>
+    </footer>
+  } @else {
+    <p>{{ 'admin.loading' | translate }}</p>
+  }
+</div>

@@ -1,0 +1,111 @@
+@if (restaurant(); as r) {
+  <article class="restaurant" [ngStyle]="themeStyles()">
+
+    @if (banner(); as b) {
+      <aside class="global-banner">{{ b }}</aside>
+    }
+
+    <!-- Bold full-bleed hero (Talkin' Tacos style) -->
+    <header
+      class="hero"
+      [style.backgroundImage]="'url(' + r.uiConfig.heroImageUrl + ')'"
+    >
+      <div class="hero__overlay">
+        @if (r.uiConfig.logoUrl) {
+          <img class="hero__logo" [src]="r.uiConfig.logoUrl" [alt]="r.name + ' logo'" />
+        }
+        <h1 class="hero__title">{{ r.name }}</h1>
+        @if (r.tagline) {
+          <p class="hero__tagline">{{ r.tagline }}</p>
+        }
+        <div class="hero__cuisine">
+          @for (c of r.cuisineTypes; track c) {
+            <span class="hero__chip">{{ c }}</span>
+          }
+        </div>
+      </div>
+    </header>
+
+    <!-- Sticky category nav (Shandmas-style category strip) -->
+    @if (stickyNavEnabled() && r.menuCategories.length) {
+      <nav class="category-nav" aria-label="Menu categories">
+        <button
+          class="category-nav__pill"
+          [class.is-active]="activeCategory() === null"
+          (click)="selectCategory(null)"
+        >
+          {{ 'detail.allCategories' | translate }}
+        </button>
+        @for (cat of r.menuCategories; track cat) {
+          <button
+            class="category-nav__pill"
+            [class.is-active]="activeCategory() === cat"
+            (click)="selectCategory(cat)"
+          >
+            {{ cat }}
+          </button>
+        }
+      </nav>
+    }
+
+    <!-- Image-first menu grid (layout driven by A/B flag, fallback to per-tenant config) -->
+    <section
+      class="menu"
+      [class.menu--grid]="effectiveLayout() === 'GRID'"
+      [class.menu--list]="effectiveLayout() === 'LIST'"
+      [class.menu--magazine]="effectiveLayout() === 'MAGAZINE'"
+    >
+      @for (item of visibleItems(); track item._id || item.name) {
+        <article class="card" [class.card--unavailable]="!item.isAvailable">
+          <div
+            class="card__image"
+            [style.backgroundImage]="
+              item.imageUrl
+                ? 'url(' + item.imageUrl + ')'
+                : 'linear-gradient(135deg, var(--brand-primary), var(--brand-accent))'
+            "
+            role="img"
+            [attr.aria-label]="item.name"
+          ></div>
+
+          <div class="card__body">
+            <header class="card__header">
+              <h3 class="card__title">{{ item.name }}</h3>
+              <span class="card__price">{{ formatPrice(item) }}</span>
+            </header>
+
+            @if (item.description) {
+              <p class="card__desc">{{ item.description }}</p>
+            }
+
+            @if (item.tags.length) {
+              <ul class="card__tags">
+                @for (t of item.tags; track t) {
+                  <li class="card__tag">{{ t }}</li>
+                }
+              </ul>
+            }
+
+            <button
+              class="card__cta"
+              type="button"
+              [disabled]="!item.isAvailable || !item.shopifyVariantId"
+              (click)="orderItem(item)"
+            >
+              {{ (item.isAvailable ? 'detail.order' : 'detail.soldOut') | translate }}
+            </button>
+          </div>
+        </article>
+      } @empty {
+        <p class="menu__empty">{{ 'detail.empty' | translate }}</p>
+      }
+    </section>
+
+    <footer class="footer">
+      <p>{{ r.address.street }}, {{ r.address.city }} — {{ r.phone }}</p>
+      <a routerLink="/">{{ 'detail.backHome' | translate }}</a>
+    </footer>
+  </article>
+} @else {
+  <p class="loading">{{ 'detail.loading' | translate }}</p>
+}

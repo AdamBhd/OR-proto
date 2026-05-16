@@ -1,0 +1,42 @@
+<nav class="topbar">
+  <a routerLink="/" class="brand" aria-label="OpenRate home">
+    <app-brand-logo [size]="34" />
+  </a>
+
+  <div class="topbar__links">
+    <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
+      {{ 'nav.restaurants' | translate }}
+    </a>
+
+    @if (auth.user(); as u) {
+      @if (u.role === 'ADMIN') {
+        <a routerLink="/admin" routerLinkActive="is-active">{{ 'nav.admin' | translate }}</a>
+      }
+      @if (u.role === 'OWNER' || u.role === 'ADMIN') {
+        <a routerLink="/owner" routerLinkActive="is-active">{{ 'nav.myRestaurant' | translate }}</a>
+      }
+      <a routerLink="/me" routerLinkActive="is-active">{{ 'nav.account' | translate }}</a>
+      <button type="button" class="logout" (click)="logout()">
+        {{ 'nav.signOut' | translate }} ({{ u.email }})
+      </button>
+    } @else {
+      <a routerLink="/login" routerLinkActive="is-active" class="cta">
+        {{ 'nav.signIn' | translate }}
+      </a>
+    }
+
+    <button
+      type="button"
+      class="lang-toggle"
+      (click)="toggleLang()"
+      [attr.aria-label]="'Switch to ' + i18n.otherLanguage().label"
+      [title]="i18n.otherLanguage().label"
+    >
+      <span class="lang-toggle__current">{{ i18n.lang().toUpperCase() }}</span>
+      <span class="lang-toggle__sep">/</span>
+      <span class="lang-toggle__other">{{ i18n.otherLanguage().label }}</span>
+    </button>
+  </div>
+</nav>
+
+<router-outlet />

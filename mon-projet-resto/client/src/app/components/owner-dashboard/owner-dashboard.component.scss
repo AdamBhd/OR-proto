@@ -1,0 +1,50 @@
+.panel label {
+  display: block;
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  label {
+    flex: 1;
+    min-width: 110px;
+  }
+
+  input[type='color'] {
+    height: 40px;
+    padding: 4px;
+  }
+}
+
+textarea.text {
+  font-family: inherit;
+  resize: vertical;
+}
+
+select.text,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  margin-top: 0.4rem;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+
+  &:focus { outline: none; border-color: #1E88E5; }
+}
+
+.error {
+  color: #a4161a;
+  background: #fde7e9;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+}

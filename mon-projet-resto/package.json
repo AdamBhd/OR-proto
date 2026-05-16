@@ -1,0 +1,17 @@
+{
+  "name": "mon-projet-resto",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Multi-tenant restaurant aggregator — Angular client + Node/Express API + Headless Shopify checkout.",
+  "scripts": {
+    "install:all": "npm install && npm --prefix client install && npm --prefix server install",
+    "dev:client": "npm --prefix client run start",
+    "dev:server": "npm --prefix server run dev",
+    "dev": "concurrently -k -n CLIENT,SERVER -c blue,magenta \"npm run dev:client\" \"npm run dev:server\"",
+    "build": "npm --prefix client run build && npm --prefix server run build",
+    "start:server": "npm --prefix server run start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

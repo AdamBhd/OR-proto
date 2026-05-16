@@ -1,0 +1,28 @@
+<div class="dash">
+  <header class="dash__header">
+    <div>
+      <h1>{{ 'customer.title' | translate }}</h1>
+      <p>{{ 'customer.subtitle' | translate }}</p>
+    </div>
+    <div class="dash__user">
+      {{ 'admin.signedInAs' | translate }} <strong>{{ auth.user()?.email }}</strong>
+    </div>
+  </header>
+
+  <section class="panel">
+    <h2>{{ 'customer.profile' | translate }}</h2>
+    @if (auth.user(); as u) {
+      <dl>
+        <dt>{{ 'customer.displayName' | translate }}</dt><dd>{{ u.displayName }}</dd>
+        <dt>{{ 'owner.email' | translate }}</dt><dd>{{ u.email }}</dd>
+        <dt>{{ 'customer.role' | translate }}</dt><dd>{{ u.role }}</dd>
+      </dl>
+    }
+  </section>
+
+  <section class="panel">
+    <h2>{{ 'customer.orderHistory' | translate }}</h2>
+    <p class="hint">{{ 'customer.orderHistoryHint' | translate }}</p>
+    <a routerLink="/" class="link">{{ 'customer.browse' | translate }}</a>
+  </section>
+</div>
